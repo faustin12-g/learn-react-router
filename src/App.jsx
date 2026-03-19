@@ -7,6 +7,7 @@ import Header from './components/Header'
 import AboutOverview from './components/AboutOverview'
 import AboutCompany from './components/AboutCompany'
 import AboutTeam from './components/AboutTeam'
+import NotFound from './components/NotFound'
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
       <Header />
          
       <Routes>
+
         <Route path='/' element={<Home/>} />
         <Route path='/about' element={<About />} >
           <Route path='overview' element={<AboutOverview/>}/>
@@ -21,8 +23,7 @@ const App = () => {
           <Route path='team' element={<AboutTeam/>} />
         </Route>
         <Route path='/contact' element = {<Contact />} />
-        
-        
+        <Route path='*' element={<NotFound/> }/>
       </Routes>
     </>
   )
