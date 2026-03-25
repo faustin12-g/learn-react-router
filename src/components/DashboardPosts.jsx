@@ -1,6 +1,12 @@
-import React from 'react'
+import useFetch from "./useFetch"
 
 const DashboardPosts = () => {
+  const {data: posts, loading, error} = useFetch('https://jsonplaceholder.typicode.com/posts')
+  const {data: users} = useFetch('https://jsonplaceholder.typicode.com/posts')
+  
+
+  if(loading) return <p>Loading posts...</p>
+  if(error) return <p>Error: {error}</p>
   return (
     <div>
       <div className='mb-8'>
@@ -9,8 +15,8 @@ const DashboardPosts = () => {
       </div>
 
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-        {[1, 2, 3, 4, 5, 6].map((post) => (
-          <div key={post} className='bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition cursor-pointer'>
+        {posts.map((post) => (
+          <div key={post.id} className='bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition cursor-pointer'>
             <div className='bg-gradient-to-r from-blue-500 to-blue-600 h-32'></div>
             <div className='p-6'>
               <div className='mb-4'>
@@ -18,12 +24,12 @@ const DashboardPosts = () => {
                   Technology
                 </div>
               </div>
-              <h3 className='text-lg font-bold text-gray-900 mb-2'>Post Title {post}</h3>
+              <h3 className='text-lg font-bold text-gray-900 mb-2'>{post.title}</h3>
               <p className='text-gray-600 text-sm mb-4 line-clamp-3'>
-                This is a sample post description. It contains the main content or excerpt of the blog post or article. Posts are used to share information and engage with the audience.
+                {post.body}
               </p>
               <div className='flex justify-between items-center'>
-                <span className='text-xs text-gray-500'>By User {post}</span>
+                <span className='text-xs text-gray-500'></span>
                 <button className='px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm transition font-medium'>
                   Read More
                 </button>
