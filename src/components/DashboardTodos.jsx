@@ -4,7 +4,7 @@ import  useFetch  from "./useFetch"
 const DashboardTodos = () => {
     const [todos, setTodos] = useState([])
     const {data:tds, loading, error, setError} = useFetch('https://jsonplaceholder.typicode.com/todos')
-    const{users} = useFetch('https://jsonplaceholder.typicode.com/users')
+    const { data: users } = useFetch('https://jsonplaceholder.typicode.com/users')
 
     useEffect(()=>{
       setTodos(tds)
@@ -78,7 +78,7 @@ const DashboardTodos = () => {
             <input type='checkbox' checked={item.completed} className='w-5 h-5 cursor-pointer' onChange={()=>handleCompleted(item.id)} />
             <div className='flex-1'>
               <p className={`text-gray-900 ${item.completed?'line-through': ''} font-medium`}>{item.title}</p>
-              <p className='text-gray-500 text-sm'>UserID: {item.userId}</p>
+              <p className='text-gray-500 text-sm'>User: {(users.find(u=>u.id===item.userId)?.username||'Unknown user')}</p>
             </div>
             <button onClick={()=>handleDelete(item.id)} className='px-4 py-2 bg-red-100 hover:bg-red-200 text-red-600 rounded-lg transition'>
               Delete

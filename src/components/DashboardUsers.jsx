@@ -1,6 +1,11 @@
-import React from 'react'
+// import { useState, useEffect } from "react"
+import useFetch from "./useFetch"
 
 const DashboardUsers = () => {
+  const {data: users, loading, error } = useFetch('https://jsonplaceholder.typicode.com/users')
+
+  if(loading) return <p>Loading users...</p>
+  if(error) return <p>Error: {error}</p>
   return (
     <div>
       <div className='mb-8'>
@@ -20,19 +25,19 @@ const DashboardUsers = () => {
             </tr>
           </thead>
           <tbody className='divide-y divide-gray-200'>
-            {[1, 2, 3, 4, 5].map((user) => (
-              <tr key={user} className='hover:bg-gray-50 transition'>
+            {users.map((usr) => (
+              <tr key={usr.id} className='hover:bg-gray-50 transition'>
                 <td className='px-6 py-4'>
-                  <p className='text-gray-900 font-medium'>User Name {user}</p>
+                  <p className='text-gray-900 font-medium'>Name {usr.name}</p>
                 </td>
                 <td className='px-6 py-4'>
-                  <p className='text-gray-600'>user{user}@email.com</p>
+                  <p className='text-gray-600'>{usr.email}</p>
                 </td>
                 <td className='px-6 py-4'>
-                  <p className='text-gray-600'>+1-555-000-{user}</p>
+                  <p className='text-gray-600'>{usr.phone}</p>
                 </td>
                 <td className='px-6 py-4'>
-                  <p className='text-gray-600'>Company Inc</p>
+                  <p className='text-gray-600'>{usr.company.name}</p>
                 </td>
                 <td className='px-6 py-4'>
                   <button className='px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-600 rounded-lg transition text-sm font-medium'>
