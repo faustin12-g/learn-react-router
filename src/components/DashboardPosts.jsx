@@ -1,8 +1,10 @@
+import { useState } from "react"
 import useFetch from "./useFetch"
 
 const DashboardPosts = () => {
+  const [more, setMore] = useState({})
   const {data: posts, loading, error} = useFetch('https://jsonplaceholder.typicode.com/posts')
-  const {data: users} = useFetch('https://jsonplaceholder.typicode.com/posts')
+  const {data: users} = useFetch('https://jsonplaceholder.typicode.com/users')
   
 
   if(loading) return <p>Loading posts...</p>
@@ -25,13 +27,13 @@ const DashboardPosts = () => {
                 </div>
               </div>
               <h3 className='text-lg font-bold text-gray-900 mb-2'>{post.title}</h3>
-              <p className='text-gray-600 text-sm mb-4 line-clamp-3'>
+              <p className={`text-gray-600 text-sm mb-4 ${more[post.id]?'line-clamp-1':''}`}>
                 {post.body}
               </p>
               <div className='flex justify-between items-center'>
-                <span className='text-xs text-gray-500'></span>
-                <button className='px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm transition font-medium'>
-                  Read More
+                <span className='text-xs text-gray-500'>{users.find(user=> user.id===post.userId)?.username||'Unknown'}</span>
+                <button onClick={()=>setMore(prev=>({...prev, [post.id]: !prev[post.id]}))} className='px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm transition font-medium'>
+                  {more[post.id]?'More':'Less'}
                 </button>
               </div>
             </div>
